@@ -4,14 +4,13 @@ Utils for benchmark-daemon
 @author FATESAIKOU
 """
 
-#from tensorflow.python.client import device_lib
+from tensorflow.python.client import device_lib
 
 import time
 
 
 def getDeviceList():
-    #device_ids = [ device.name for device in device_lib.list_local_devices()]
-    device_ids = [1, 2, 3]
+    device_ids = [ device.name for device in device_lib.list_local_devices()]
 
     return device_ids
 
