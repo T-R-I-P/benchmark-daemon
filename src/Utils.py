@@ -27,12 +27,12 @@ def requestMsg(send_msg, wait_msg, sock, recive_size):
     while True:
         counter += 1
         sock.send(send_msg)
-        print "Send: ", send_msg
         msg = sock.recv(recive_size)
-        print "Recv ", msg, "Aim: ", wait_msg
 
         if msg == wait_msg or wait_msg == None or counter > 10:
-            return msg
+            break
+
+    return msg
 
 def responseMsg(send_msg, wait_msg, sock, recive_size):
     counter = 0
