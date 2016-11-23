@@ -26,7 +26,7 @@ except socket.error, msg:
 	sys.exit(1)
 
 sock.bind((host, port))
-sock.listen(2)
+sock.listen(10)
 
 
 """ Reading """
