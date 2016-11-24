@@ -4,16 +4,18 @@ Utils for benchmark-daemon
 @author FATESAIKOU
 """
 
-from tensorflow.python.client import device_lib
-
 import time
 import subprocess
 import pprint
 import thread
+import json
 
 
 def getDeviceList():
-	device_ids = [ device.name for device in device_lib.list_local_devices()]
+	sh_command = "../scripts/getDeviceList.py 2>/dev/null"
+	device_ids = json.loads(subprocess.check_output(sh_command, shell=True))
+
+	print("[GET] DEVICE_LIST: " + json.dumps(device_ids))
 
 	return device_ids
 
@@ -23,28 +25,26 @@ def getPerformance(benchmark_src):
 	proc.stdin.write(benchmark_src)
 	proc.stdin.close()
 	execute_time = float(proc.stdout.read())
+	
+	print("[GET] PERFORMANCE: " + str(execute_time) + " sec")
 
 	return execute_time
 
 def requestMsg(send_msg, wait_msg, sock, recive_size):
-	counter = 0
 	while True:
-		counter += 1
 		sock.send(send_msg)
 		msg = sock.recv(recive_size)
 
-		if msg == wait_msg or wait_msg == None or counter > 10:
+		if msg == wait_msg or wait_msg == None:
 			break
 
 	return msg
 
 def responseMsg(send_msg, wait_msg, sock, recive_size):
-	counter = 0
 	while True:
-		counter += 1
 		msg = sock.recv(recive_size)
 
-		if msg == wait_msg or wait_msg == None or counter > 10:
+		if msg == wait_msg or wait_msg == None:
 			break
 		else:
 			sock.send("Resend")

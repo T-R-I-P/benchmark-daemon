@@ -57,6 +57,7 @@ while True:
 			transfer_time = subprocess.check_output(sh_command, shell=True)
 			Utils.responseMsg(str(len(transfer_time)), 'Exec', csock, COMMAND_MAX)
 			Utils.responseMsg(transfer_time, 'Got-Size', csock, COMMAND_MAX)
+			print("[GET] NETWORK_PERFORMANCE: " + str(transfer_time))
 		elif msg == 'end':
 			break
 		elif msg == 'end-server':
